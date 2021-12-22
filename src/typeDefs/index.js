@@ -1,5 +1,6 @@
 const authTypeDef = require('./auth')
+const logsTypeDef = require('./logs')
 
-const SchemasArrays = [authTypeDef]
+const SchemasArrays = [authTypeDef, logsTypeDef]
 
 module.exports = SchemasArrays
