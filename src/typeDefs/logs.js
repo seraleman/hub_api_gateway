@@ -31,6 +31,28 @@ const logsTypeDefs = gql`
 		description: String!
 	}
 
+	input ReasonLogCreateInput {
+		id: ID!
+		name: String!
+		description: String
+	}
+
+	input LogCreateInput {
+		reason: ReasonLogCreateInput!
+		user: ID!
+	}
+
+	input ReasonLogUpdateInput {
+		id: ID!
+		name: String!
+		description: String
+	}
+
+	input LogUpdateInput {
+		reason: ReasonLogUpdateInput!
+		user: ID!
+	}
+
 	type Query {
 		getAllReasons: [Reason!]
 		getReasonById(reasonIdInput: ID!): Reason!
@@ -47,6 +69,9 @@ const logsTypeDefs = gql`
 		createReason(reasonInput: ReasonCreateInput!): Reason!
 		updateReason(reasonIdInput: ID, reasonInput: ReasonUpdateInput!): Reason!
 		deleteReasonById(reasonIdInput: ID!): String!
+
+		createLog(logInput: LogCreateInput!): Log!
+		updateLog(logIdInput: ID!, logInput: LogUpdateInput!): Log!
 	}
 `
 

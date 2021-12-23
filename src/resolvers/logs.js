@@ -162,7 +162,6 @@ const logsResolver = {
 		 * @param {Objects} role [Informa el rol del usuario]
 		 * @returns {Objects} [Devuelte una lista de registros relacionados con el id de la razón que se pasa
 		 * 	por parámetro]
-		 * Probado: Probado, probar con fecha diferente 2021-12-21!
 		 */
 		getLogsByDate: async (_, { dateInput }, { dataSources, role }) => {
 			if (role != null) {
@@ -185,7 +184,6 @@ const logsResolver = {
 		 * @param {Objects} role [Informa el rol del usuario]
 		 * @returns {Objects} [Devuelte una lista de registros relacionados con el id de la razón que se pasa
 		 * 	por parámetro]
-		 * Probado: Probado, probar con fecha diferente 2021-12-21!
 		 */
 		getLogsByReasonAndDate: async (
 			_,
@@ -301,15 +299,80 @@ const logsResolver = {
 		 * Probado: Ok!
 		 */
 		deleteReasonById: async (_, { reasonIdInput }, { dataSources, role }) => {
-			const logs = (await dataSources.LogsAPI.getAllLogs()).data
-			logs.forEach(({ reason }) => {
-				if (reason.id == reasonIdInput)
-					throw new ApolloError(
-						`LA \'RAZÓN\' QUE INTENTA ELIMINAR ESTÁ ENLAZADA A ALGÚN REGISTRO: ${412}:`,
-						412
-					)
-			})
-			return (await dataSources.LogsAPI.deleteReasonById(reasonIdInput)).message
+			if (role != null) {
+				if (role == admin || role == user) {
+					const logs = (await dataSources.LogsAPI.getAllLogs()).data
+					logs.forEach(({ reason }) => {
+						if (reason.id == reasonIdInput)
+							throw new ApolloError(
+								`LA \'RAZÓN\' QUE INTENTA ELIMINAR ESTÁ ENLAZADA A ALGÚN REGISTRO: ${412}:`,
+								412
+							)
+					})
+					return (await dataSources.LogsAPI.deleteReasonById(reasonIdInput))
+						.message
+				} else {
+					throw new ApolloError(`NO AUTORIZADO : ${403}:`, 403)
+				}
+			} else {
+				throw new ApolloError(`NO AUTENTICADO: ${407}: `, 407)
+			}
+		},
+
+		/**
+		 * Crea un registro
+		 * @param {Indicador} _ [Significa que no viene nada en el "parent"]
+		 * @param {Object} logInput [Contiene todos lo campos para crear un registro]
+		 * @param {Object} dataSources [Permite acceder a los métodos de los microservicios]
+		 * @param {String} role [Informa el rol del usuario autenticado]
+		 * @param {Object} log [Estructura los campos para crear los registros]
+		 * @returns {Object} [Devuelve el registro creado]
+		 * @throws Devuelve error de no autorizado - Devuelve error de no autenticado
+		 * Probado: Ok!
+		 */
+		createLog: async (_, { logInput }, { dataSources, role }) => {
+			if (role != null) {
+				if (role == admin || role == user) {
+					const log = {
+						reason: logInput.reason,
+						user: logInput.user,
+					}
+					return (await dataSources.LogsAPI.createLog(log)).data
+				} else {
+					throw new ApolloError(`NO AUTORIZADO : ${403}:`, 403)
+				}
+			} else {
+				throw new ApolloError(`NO AUTENTICADO: ${407}: `, 407)
+			}
+		},
+
+		/**
+		 * Actualiza determinado registro
+		 * @param {Indicador} _ [Significa que no viene nada en el "parent"]
+		 * @param {string} logIdInput [Id del registro a actualizar]
+		 * @param {Object} logInput [Objeto con los campos para actualizar el registro]
+		 * @param {Object} dataSources [Permite acceder a los métodos de los microservicios]
+		 * @param {String} role [Informa el rol del usuario autenticado]
+		 * @param {Object} log [Objeto donde se determinan los datos para actualizar el registro]
+		 * @returns {Object} [Devuelve el registro actualizado]
+		 * @throws Devuelve error de no autorizado - Devuelve error de no autenticado
+		 * Probado: Ok!
+		 */
+		updateLog: async (_, { logIdInput, logInput }, { dataSources, role }) => {
+			if (role != null) {
+				if (role == admin || role == user) {
+					const log = {
+						reason: logInput.reason,
+						user: logInput.user,
+					}
+					return (await dataSources.LogsAPI.updateLog(logIdInput, logInput))
+						.data
+				} else {
+					throw new ApolloError(`NO AUTORIZADO : ${403}:`, 403)
+				}
+			} else {
+				throw new ApolloError(`NO AUTENTICADO: ${407}: `, 407)
+			}
 		},
 	},
 }

@@ -125,6 +125,25 @@ class LogsAPI extends RESTDataSource {
 	async getLogsByReasonIdAndDate(reasonId, date) {
 		return await this.get(`api/ms/logs/reason/${reasonId}/${date}`)
 	}
+
+	/**
+	 * Crea un registro
+	 * @param {Object} logInput [Contiene el objeto con los campos para crear el registro]
+	 * @returns {Object} [Devuelve el objeto creado]
+	 */
+	async createLog(log) {
+		return await this.post('api/ms/logs/', log)
+	}
+
+	/**
+	 * Actualiza un determinado registro
+	 * @param {String} logId [Id del registro a actualizar]
+	 * @param {Object} log [Objeto con los campos para actualizar el registro]
+	 * @returns {Object} [Devueleve el objeto actualizado]
+	 */
+	async updateLog(logId, log) {
+		return await this.put(`api/ms/logs/${logId}`, log)
+	}
 }
 
 /**
