@@ -6,13 +6,13 @@
 2. [Tecnología](#tecnología)
 3. [Instalación](#instalación)
 
-# Descripción
+## Descripción
 
-Este componente es el eje del desarrollo ya que en él se unen todos los microservicios de forma lógica y flexible para ser consumido por un frontend_client.
+Este componente es el eje del desarrollo ya que en él se unen todos los microservicios de forma lógica y flexible para ser consumido por un _frontend-client_.
 
 ---
 
-# Tecnología
+## Tecnología
 
 - JavaScript
 - GraphQL
@@ -21,20 +21,21 @@ Este componente es el eje del desarrollo ya que en él se unen todos los microse
 
 ---
 
-# Instalación
+## Instalación
 
 Para su uso se debe implementar un archivo que contenga las URL de los componentes (microservicios).
+
+- Intalar los módulos `$ yarn install`
 
 - Crear archivo **server.js** en _src/_ e incluir el siguiente código:
 
 ```
 module.exports = {
-	ejm1_api_url: '',
-	ejm2_api_url: '',
+	microservice1_api_url: 'url_microservice1/',
+	microservice2_api_url: 'url_microservice2/',
 }
 ```
 
-- Correr la aplicación
-  $ yarn dev
+- Correr la aplicación `$ yarn dev`
 
 ---
