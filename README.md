@@ -31,8 +31,8 @@ Para su uso se debe implementar un archivo que contenga las URL de los component
 
 ```
 module.exports = {
-	ejm1_api_url: '',
-	ejm2_api_url: '',
+	microservice1_api_url: 'http:/url_microservice1/',
+	microservice2_api_url: 'http:/url_microservice2/',
 }
 ```
 
