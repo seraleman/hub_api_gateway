@@ -7,89 +7,103 @@ const { gql } = require('apollo-server')
  * @constant authTypeDefs [Lista de todos los type defs de auth]
  */
 const authTypeDefs = gql`
-	type User {
-		id: ID!
-		date_of_birth: String!
-		document: String!
-		document_type: String!
-		email: String!
-		enabled: Boolean!
-		entity: String!
-		full_name: String!
-		password: String!
-		phoneNumber: String!
-		position: String!
-		role: String!
-	}
+  type User {
+    id: ID!
+    date_of_birth: String!
+    document: String!
+    document_type: String!
+    email: String!
+    enabled: Boolean!
+    entity: String!
+    full_name: String!
+    password: String!
+    phoneNumber: String!
+    position: String!
+    role: String!
+  }
 
-	type Token {
-		refresh: String!
-		access: String!
-	}
+  type Token {
+    refresh: String!
+    access: String!
+  }
 
-	type Access {
-		access: String!
-	}
+  type Access {
+    access: String!
+  }
 
-	input CredentialsInput {
-		email: String!
-		password: String!
-	}
+  input disableEnableUserInput {
+    date_of_birth: String!
+    document: String!
+    document_type: String!
+    email: String!
+    enabled: Boolean!
+    entity: String!
+    full_name: String!
+    password: String!
+    phoneNumber: String!
+    position: String!
+    role: String!
+  }
 
-	input SignUpInput {
-		date_of_birth: String!
-		document: String!
-		document_type: String!
-		email: String!
-		entity: String!
-		full_name: String!
-		password: String!
-		phoneNumber: String!
-		position: String!
-		role: String!
-	}
+  input CredentialsInput {
+    email: String!
+    password: String!
+  }
 
-	input UpdateInput {
-		date_of_birth: String!
-		document: String!
-		document_type: String!
-		email: String!
-		entity: String!
-		full_name: String!
-		password: String!
-		phoneNumber: String!
-		position: String!
-		role: String!
-	}
+  input SignUpInput {
+    date_of_birth: String!
+    document: String!
+    document_type: String!
+    email: String!
+    entity: String!
+    full_name: String!
+    password: String!
+    phoneNumber: String!
+    position: String!
+    role: String!
+  }
 
-	input disableEnableUserInput {
-		date_of_birth: String!
-		document: String!
-		document_type: String!
-		email: String!
-		enabled: Boolean!
-		entity: String!
-		full_name: String!
-		password: String!
-		phoneNumber: String!
-		position: String!
-		role: String!
-	}
+  input UpdateInput {
+    date_of_birth: String!
+    document: String!
+    document_type: String!
+    email: String!
+    entity: String!
+    full_name: String!
+    password: String!
+    phoneNumber: String!
+    position: String!
+    role: String!
+  }
 
-	type Query {
-		userDetailById(userIdInput: ID!): User!
-	}
+  input RegisterUser {
+    date_of_birth: String!
+    document: String!
+    document_type: String!
+    email: String!
+    entity: String!
+    full_name: String!
+    phoneNumber: String!
+    position: String!
+  }
 
-	type Mutation {
-		signUpUser(userInput: SignUpInput!): Token!
-		logIn(credentialsInput: CredentialsInput!): Token!
-		refreshToken(refreshInput: String!): Access!
-		updateUser(userIdInput: ID!, userInput: UpdateInput!): User!
-		disableUnableUser(
-			userIdInput: ID!
-			userInput: disableEnableUserInput!
-		): User!
-	}
+  type Query {
+    userDetailById(userIdInput: ID!): User!
+  }
+
+  type Mutation {
+    disableUnableUser(
+      userIdInput: ID!
+      userInput: disableEnableUserInput!
+    ): User!
+    logIn(credentialsInput: CredentialsInput!): Token!
+    refreshToken(refreshInput: String!): Access!
+    signUpUser(userInput: SignUpInput!): Token!
+    updateUser(userIdInput: ID!, userInput: UpdateInput!): User!
+
+    # Mutación destinada al registro del usuario sin loguin
+    registerUser(userInput: RegisterUser!): Token!
+  }
 `
 
 /**
