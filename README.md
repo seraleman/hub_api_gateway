@@ -25,7 +25,7 @@ Este componente es el eje del desarrollo ya que en él se unen todos los microse
 
 Para su uso se debe implementar un archivo que contenga las URL de los componentes (microservicios).
 
-- Intalar los módulos `$ yarn install`
+- Instalar los módulos `$ yarn install`
 
 - Crear archivo **server.js** en _src/_ e incluir el siguiente código:
 
